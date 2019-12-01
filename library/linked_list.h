@@ -57,11 +57,11 @@ void delete_node(Node* begin, Node* to_delete)
 		begin = new_begin;
 		return;
 	}
-
+	
 	Node* current_node = begin;
 	while (current_node->next)
 	{
-		if (equals(current_node, to_delete))
+		if (equals(current_node->next, to_delete))
 			break;
 		
 		current_node = current_node->next;
