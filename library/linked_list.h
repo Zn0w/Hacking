@@ -67,20 +67,13 @@ void insert_back(Node** end, uint64_t data)
 	Node* new_node = create_node(data);
 	(*end)->next = new_node;
 	*end = new_node;
-
-	//latest->next = new_node;
-	//latest = new_node;
 }
 
 void insert_back_unknown(Node* begin, uint64_t data)
 {
 	Node* new_node = create_node(data);
-	
-	Node* latest = begin;
-	while (latest->next)
-		latest = latest->next;
-	
-	latest->next = new_node;
+	Node* end = get_end(begin);
+	end->next = new_node;
 }
 
 // DOCS : If two nodes are equal, returns true
