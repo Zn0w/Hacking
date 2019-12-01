@@ -76,6 +76,23 @@ void insert_back_unknown(Node* begin, uint64_t data)
 	end->next = new_node;
 }
 
+void delete_front(Node** begin)
+{
+	Node* new_begin = (*begin)->next;
+	free(*begin);
+	*begin = new_begin;
+}
+
+void delete_back(Node* begin)
+{
+	Node* current_node = begin;
+	while (current_node->next->next)
+		current_node = current_node->next;
+
+	free(current_node->next);
+	current_node->next = 0;
+}
+
 // DOCS : If two nodes are equal, returns true
 // DOCS : If two nodes are not equal, returns false
 bool equals(Node* n1, Node* n2)
@@ -85,20 +102,8 @@ bool equals(Node* n1, Node* n2)
 
 // DOCS : If success, returns
 // DOCS : If fail, returns
-void delete_node(Node* begin, Node* to_delete)
-{
-	if (begin == 0)
-	{
-		return;
-	}
-	else if (begin == to_delete)
-	{
-		Node* new_begin = begin->next;
-		free(begin);
-		begin = new_begin;
-		return;
-	}
-	
+void delete_next_to(Node* begin, Node* to_delete)
+{	
 	Node* current_node = begin;
 	while (current_node->next)
 	{

@@ -28,11 +28,15 @@ int main()
 	insert_back(&last, 2);
 	insert_back(&last, 32);
 	insert_back(&last,59);
-	
-	insert_back_unknown(first, 2);
-	insert_back_unknown(first, 32);
-	insert_back_unknown(first,59);
 
+	delete_front(&first);
+	delete_front(&first);
+	delete_front(&first);
+	delete_front(&first);
+
+	delete_back(first);
+	delete_back(first);
+	delete_back(first);
 
 	display_list(first);
 	/*
