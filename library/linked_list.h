@@ -13,8 +13,8 @@ struct Node
 
 // non-oop implementation
 
-// DOCS : If success, returns a pointer to the allocated on the heap node
-// DOCS : If fail, returns 0
+// DOCS	: If success, returns a pointer to the allocated on the heap node, the next is set to 0
+// 		  If fail, returns 0
 Node* create_node(uint64_t data)
 {
 	Node* new_node = (Node*)malloc(sizeof(Node));
@@ -24,10 +24,58 @@ Node* create_node(uint64_t data)
 	return new_node;
 }
 
-// DOCS : If success, returns
-// DOCS : If fail, returns
-void insert(Node* begin, Node* new_node)
+// DOCS : If success, returns a pointer to the beginning of the linked list
+// 		  If fail, returns 0
+Node* construct_list(uint64_t* data_array, uint64_t size)
 {
+	Node* begin = 0;
+	Node* node = create_node(*(data_array));
+	begin = node;
+	
+	for (int i = 1; i < size; i++)
+	{
+		node->next = create_node(*(data_array + i));
+		if (node->next == 0)
+			return 0;
+		else
+			node = node->next;
+	}
+
+	return begin;
+}
+
+Node* get_end(Node* begin)
+{
+	Node* current_node = begin;
+	while (current_node->next)
+		current_node = current_node->next;
+
+	return current_node;
+}
+
+// DOCS : If success, returns
+// 		  If fail, returns
+void insert_front(Node** begin, uint64_t data)
+{
+	Node* new_node = create_node(data);
+	new_node->next = *begin;
+	*begin = new_node;
+}
+
+void insert_back(Node** end, uint64_t data)
+{
+	Node* new_node = create_node(data);
+	(*end)->next = new_node;
+	*end = new_node;
+
+	//latest->next = new_node;
+	//latest = new_node;
+}
+
+void insert_back_unknown(Node* begin, uint64_t data)
+{
+	Node* new_node = create_node(data);
+	
 	Node* latest = begin;
 	while (latest->next)
 		latest = latest->next;
@@ -50,7 +98,7 @@ void delete_node(Node* begin, Node* to_delete)
 	{
 		return;
 	}
-	else if (equals(begin, to_delete))
+	else if (begin == to_delete)
 	{
 		Node* new_begin = begin->next;
 		free(begin);
@@ -76,24 +124,4 @@ void delete_node(Node* begin, Node* to_delete)
 	Node* node = current_node->next->next;
 	free(current_node->next);
 	current_node->next = node;
-}
-
-// DOCS : If success, returns a pointer to the beginning of the linked list
-// DOCS : If fail, returns 0
-Node* construct_list(uint64_t* data_array, uint64_t size)
-{
-	Node* begin = 0;
-	Node* node = create_node(*(data_array));
-	begin = node;
-	
-	for (int i = 1; i < size; i++)
-	{
-		node->next = create_node(*(data_array + i));
-		if (node->next == 0)
-			return 0;
-		else
-			node = node->next;
-	}
-
-	return begin;
 }
