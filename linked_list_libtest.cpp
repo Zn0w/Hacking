@@ -56,6 +56,41 @@ int main()
 	delete_list(first);
 
 	printf("After delete_list test\n");
+
+	printf("\nBegin the oop LinkedList test\n");
+
+	LinkedList linked_list(values, 10);
+
+	printf("After constructor test\n");
+	display_list(linked_list.begin);
+
+	linked_list.insert_front(3);
+	linked_list.insert_front(2);
+	linked_list.insert_front(1);
+
+	printf("After insert_front test\n");
+	display_list(linked_list.begin);
+
+	linked_list.insert_back(1);
+	linked_list.insert_back(2);
+	linked_list.insert_back(3);
+
+	printf("After insert_back test\n");
+	display_list(linked_list.begin);
+
+	linked_list.delete_front();
+	linked_list.delete_front();
+	linked_list.delete_front();
+
+	printf("After delete_front test\n");
+	display_list(linked_list.begin);
+
+	linked_list.delete_back();
+	linked_list.delete_back();
+	linked_list.delete_back();
+
+	printf("After delete_back test\n");
+	display_list(linked_list.begin);
 	
 	return 0;
 }
