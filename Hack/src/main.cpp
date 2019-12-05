@@ -5,7 +5,7 @@
 //#include "library/stack.h"
 
 
-template <typename Type>
+/*template <typename Type>
 void display_list(Node<Type>* begin)
 {
 	std::cout << "--------------------------------------------------" << std::endl;
@@ -20,34 +20,34 @@ void display_list(Node<Type>* begin)
 	std::cout << i->data << std::endl;
 
 	std::cout << "--------------------------------------------------" << std::endl;
-}
+}*/
 
 void test_linked_list()
 {
 	char values[] = { 'a', 'b','c', 'd', 'e', 'f', 'g', 'h' };
 
 	LinkedList<char> linked_list(values, 8);
-	display_list(linked_list.getBegin());
+	//display_list(linked_list.getBegin());
 
 	linked_list.insert_front('3');
 	linked_list.insert_front('2');
 	linked_list.insert_front('1');
-	display_list(linked_list.getBegin());
+	//display_list(linked_list.getBegin());
 
 	linked_list.insert_back('3');
 	linked_list.insert_back('2');
 	linked_list.insert_back('1');
-	display_list(linked_list.getBegin());
+	//display_list(linked_list.getBegin());
 
 	linked_list.delete_front();
 	linked_list.delete_front();
 	linked_list.delete_front();
-	display_list(linked_list.getBegin());
+	//display_list(linked_list.getBegin());
 
 	linked_list.delete_back();
 	linked_list.delete_back();
 	linked_list.delete_back();
-	display_list(linked_list.getBegin());
+	//display_list(linked_list.getBegin());
 }
 
 /*void test_fixed_stack()
