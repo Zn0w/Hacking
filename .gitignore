@@ -1,1 +1,6 @@
-bins/
+bin/
+obj/
+.vs/
+*.vcxproj
+*.filters
+*.user
