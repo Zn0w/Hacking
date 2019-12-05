@@ -3,13 +3,6 @@
 #include <stdint.h>
 
 
-/*template <class ElementType>
-struct Node
-{
-	Node<ElementType>* next;
-	ElementType data;
-};*/
-
 template <class Type>
 class LinkedList
 {

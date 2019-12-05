@@ -2,7 +2,7 @@
 #include <assert.h>
 
 #include "library/linked_list.h"
-//#include "library/stack.h"
+#include "library/stack.h"
 
 
 void display_list(LinkedList<char>* linked_list)
@@ -45,9 +45,9 @@ void test_linked_list()
 	display_list(&linked_list);
 }
 
-/*void test_fixed_stack()
+void test_fixed_stack()
 {
-	FixedStack fixed_stack(50);
+	FixedStack<int> fixed_stack(50);
 
 	assert(fixed_stack.isEmpty());
 	assert(!fixed_stack.isFull());
@@ -94,9 +94,9 @@ void test_linked_list()
 	assert(fixed_stack.isEmpty());
 }
 
-void test_stack()
+void test_dynamic_stack()
 {
-	DynamicStack stack;
+	DynamicStack<int> stack;
 	assert(stack.isEmpty());
 
 	stack.push(5);
@@ -127,11 +127,13 @@ void test_stack()
 
 	assert(stack.getTop() == 99);
 	assert(stack.getSize() == 100);
-}*/
+}
 
 int main()
 {
 	test_linked_list();
+	test_fixed_stack();
+	test_dynamic_stack();
 
 	system("pause");
 	

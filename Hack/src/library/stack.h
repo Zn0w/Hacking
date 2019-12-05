@@ -1,21 +1,21 @@
 #pragma once
 
 #include <stdint.h>
-#include <stdlib.h>
 
 
 // A stack with fixed maximum capacity
+template <class Type>
 class FixedStack
 {
 private:
 	uint32_t size = 0;
 	int64_t top_index = -1;
-	int64_t* array = 0;
+	Type* array = 0;
 	
 public:
 	FixedStack(uint32_t size)
 	{
-		array = (int64_t*)calloc(size, sizeof(int64_t));
+		array = new Type[size];
 		if (array == 0);
 			// TODO : throw exception or something
 		this->size = size;
@@ -23,7 +23,7 @@ public:
 
 	FixedStack(uint32_t size, int64_t* values, uint32_t array_size)
 	{
-		array = (int64_t*)calloc(size, sizeof(int64_t));
+		array = new Type[size];
 		if (array == 0);
 			// TODO : throw exception 'unable to allocate memory for the stack	
 			
@@ -35,10 +35,10 @@ public:
 
 	~FixedStack()
 	{
-		free(array);
+		delete[] array;
 	}
 
-	uint64_t top()
+	Type top()
 	{
 		return array[top_index];
 	}
@@ -55,7 +55,7 @@ public:
 			return false;
 	}
 	
-	bool push(uint64_t data)
+	bool push(Type data)
 	{
 		if (!isFull())
 		{
@@ -80,16 +80,17 @@ public:
 };
 
 
-struct Node
-{
-	Node* next;
-	int64_t data;
-};
-
 // A dynamic size stack implemented with LinkedList
+template <class Type>
 class DynamicStack
 {
 private:
+	struct Node
+	{
+		Node* next;
+		Type data;
+	};
+	
 	Node* top = 0;
 	uint64_t size = 0;
 	
@@ -97,7 +98,7 @@ public:
 	DynamicStack()
 	{}
 
-	DynamicStack(int64_t* values, uint64_t array_size)
+	DynamicStack(Type* values, uint64_t array_size)
 	{
 		Node* node = create_node(values[0]);
 		top = node;
@@ -116,14 +117,14 @@ public:
 		while (to_delete->next)
 		{
 			Node* next_to_delete = to_delete->next;
-			free(to_delete);
+			delete to_delete;
 			to_delete = next_to_delete;
 		}
 		// delete the last element
-		free(to_delete);
+		delete to_delete;
 	}
 
-	int64_t getTop()
+	Type getTop()
 	{
 		if (!isEmpty())
 			return top->data;
@@ -136,13 +137,13 @@ public:
 		if (!isEmpty())
 		{
 			Node* new_top = top->next;
-			free(top);
+			delete top;
 			top = new_top;
 			size--;
 		}
 	}
 
-	void push(int64_t data)
+	void push(Type data)
 	{
 		// TODO : catch exception
 		Node* new_top = create_node(data);
@@ -164,7 +165,7 @@ public:
 private:
 	Node* create_node(uint64_t data)
 	{
-		Node* new_node = (Node*)malloc(sizeof(Node));
+		Node* new_node = new Node;
 		if (new_node == 0);
 			// TODO : throw exception 'failed to allocate memory for the new element
 		new_node->next = 0;
