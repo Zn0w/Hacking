@@ -5,49 +5,44 @@
 //#include "library/stack.h"
 
 
-/*template <typename Type>
-void display_list(Node<Type>* begin)
+void display_list(LinkedList<char>* linked_list)
 {
 	std::cout << "--------------------------------------------------" << std::endl;
 	
-	Node<Type>* i = begin;
-	while (i->next)
-	{
-		std::cout << i->data << std::endl;
-		i = i->next;
-	}
-	// dipslay the last element
-	std::cout << i->data << std::endl;
+	LinkedList<char>::iterator i = linked_list->get_iterator();
+	std::cout << i.value() << std::endl;
+	while (i.advance())
+		std::cout << i.value() << std::endl;
 
 	std::cout << "--------------------------------------------------" << std::endl;
-}*/
+}
 
 void test_linked_list()
 {
 	char values[] = { 'a', 'b','c', 'd', 'e', 'f', 'g', 'h' };
 
 	LinkedList<char> linked_list(values, 8);
-	//display_list(linked_list.getBegin());
+	display_list(&linked_list);
 
 	linked_list.insert_front('3');
 	linked_list.insert_front('2');
 	linked_list.insert_front('1');
-	//display_list(linked_list.getBegin());
+	display_list(&linked_list);
 
 	linked_list.insert_back('3');
 	linked_list.insert_back('2');
 	linked_list.insert_back('1');
-	//display_list(linked_list.getBegin());
+	display_list(&linked_list);
 
 	linked_list.delete_front();
 	linked_list.delete_front();
 	linked_list.delete_front();
-	//display_list(linked_list.getBegin());
+	display_list(&linked_list);
 
 	linked_list.delete_back();
 	linked_list.delete_back();
 	linked_list.delete_back();
-	//display_list(linked_list.getBegin());
+	display_list(&linked_list);
 }
 
 /*void test_fixed_stack()
