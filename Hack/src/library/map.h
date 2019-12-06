@@ -2,7 +2,6 @@
 
 #include <stdint.h>
 #include <stdlib.h>
-#include <type_traits>
 
 
 template <class KeyType, class ValueType>
@@ -94,14 +93,32 @@ public:
 		}
 	}
 
-	void delete_element(KeyType key, bool adjust_size)
-	{}
+	void delete_element(KeyType key)
+	{
+		int64_t index = key_exists(key);
+		if (index >= 0)
+		{
+			for (int i = index; i < size - 1; i++)
+				pairs[i] = pairs[i + 1];
+
+			top_index--;
+		}
+		else;
+		// if key doesn't exist throw exception
+	}
+
+	// if some elements were deleted, the space doesn't get freed (design choice),
+	// so you can free unused space explicitly by calling this function
+	void shrink()
+	{
+		
+	}
 
 private:
 	// return index if key exists in map, -1 if not
 	int64_t key_exists(KeyType key)
 	{
-		for (int i = 0; i < top_index; i++)
+		for (int i = 0; i <= top_index; i++)
 			if (key == pairs[i].key)
 				return i;
 

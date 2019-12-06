@@ -145,6 +145,11 @@ void test_map()
 	assert(map.get(1.8) == 'b');
 	map.insert({1.8, 'i'});
 	assert(map.get(1.8) == 'i');
+
+	map.delete_element(1.0);
+	assert(map.get(1.0) != 'a');
+	map.delete_element(3.0);
+	map.delete_element(0.001);
 }
 
 int main()
