@@ -1,44 +1,64 @@
 #pragma once
 
 #include <stdint.h>
-#include <stdlib.h>
 
 
-struct Pair
-{
-	uint64_t key;
-	int64_t data;
-};
-
-struct Node
-{
-	Node* next;
-	Pair data;
-};
-
-// TODO : maybe use LinkedList from my library ???, but first use implement templates in LinkedList
+template <class KeyType, class ValueType>
 class Map
 {
+public:
+	struct Pair
+	{
+		KeyType key;
+		ValueType value;
+	};
+
 private:
-	Pair pairs;
+	Pair* pairs = 0;
+	int64_t top_index = -1;
+	uint32_t size = 0;
 
 public:
-	Map()
-	{}
+	Map(uint32_t reserve)
+	{
+		pairs = new Pair[reserve];
+		if (pairs == 0);
+			// throw exception
+		size = reserve;
+	}
 
-	Map(Pair* pairs_array, uint64_t size)
-	{}
+	Map(Pair* pairs_array, uint32_t size)
+	{
+		pairs = new Pair[size];
+		if (pairs == 0);
+			// throw exception
+		this->size = size;
+		top_index = size - 1;
+
+		for (int i = 0; i < size; i++)
+			pairs[i] = pairs_array[i];
+	}
 	
 	~Map()
+	{
+		delete[] pairs;
+	}
+
+	ValueType get(KeyType key)
 	{}
 
-	int64_t get(uint64_t key)
-	{}
+	void insert_back(Pair pair)
+	{
+		if (top_index == max_size)
+		{
+			// reallocate array with bigger one
+			// if success then size++;
+		}
+		
+		top_index++;
+		pairs[top_index] = pair;
+	}
 
-	void insert(Pair pair)
-	{}
-
-private:
-	Node* create_node(Pair pair)
+	void delete_element(KeyType key, bool adjust_size)
 	{}
 };

@@ -3,6 +3,7 @@
 
 #include "library/linked_list.h"
 #include "library/stack.h"
+#include "library/map.h"
 
 
 void display_list(LinkedList<char>* linked_list)
@@ -129,11 +130,32 @@ void test_dynamic_stack()
 	assert(stack.getSize() == 100);
 }
 
+struct Foo
+{
+	double data;
+};
+
+struct Bar
+{
+	char data;
+};
+
+void test_map()
+{
+	// TODO : test this (default values??)
+	//Map<Foo, Bar> map(10);
+
+	Map<Foo, Bar>::Pair pairs[] = { {1.0, 'a'}, { 1.8, 'b' }, { 2.0, 'c' }, {2.5, 'd'}, {3.0, 'e'} };
+	
+	Map<Foo, Bar> map(pairs, 5);
+}
+
 int main()
 {
-	test_linked_list();
-	test_fixed_stack();
-	test_dynamic_stack();
+	//test_linked_list();
+	//test_fixed_stack();
+	//test_dynamic_stack();
+	test_map();
 
 	system("pause");
 	
