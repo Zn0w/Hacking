@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdlib.h>
+#include <type_traits>
 
 
 template <class KeyType, class ValueType>
@@ -21,7 +23,7 @@ private:
 public:
 	Map(uint32_t reserve)
 	{
-		pairs = new Pair[reserve];
+		pairs = (Pair*)calloc(reserve, sizeof(Pair));
 		if (pairs == 0);
 			// throw exception
 		size = reserve;
@@ -29,7 +31,7 @@ public:
 
 	Map(Pair* pairs_array, uint32_t size)
 	{
-		pairs = new Pair[size];
+		pairs = (Pair*)calloc(size, sizeof(Pair));
 		if (pairs == 0);
 			// throw exception
 		this->size = size;
@@ -41,24 +43,56 @@ public:
 	
 	~Map()
 	{
-		delete[] pairs;
+		for (int i = 0; i < size; i++)
+		{
+			if (!std::is_pod<ValueType>::value)
+				pairs[i].value.~ValueType();
+			free(pairs + i);
+		}
 	}
 
 	ValueType get(KeyType key)
-	{}
-
-	void insert_back(Pair pair)
 	{
-		if (top_index == max_size)
+		int64_t index = key_exists(key);
+		if (index >= 0)
+			return pairs[index].value;
+		else;
+			// if key doesn't exist throw exception
+	}
+
+	void insert(Pair pair)
+	{
+		int64_t index;
+		if ((index = key_exists(pair.key)) != -1)
+			pairs[index].value = pair.value;
+		else
 		{
-			// reallocate array with bigger one
-			// if success then size++;
+			top_index++;
+			if (top_index == size)
+			{
+				// reallocate array with bigger one
+				// if success then size++;
+				pairs = (Pair*)realloc(pairs, size + 1);
+				if (pairs == 0);
+				// throw exception
+				size++;
+			}
+
+			pairs[top_index] = pair;
 		}
-		
-		top_index++;
-		pairs[top_index] = pair;
 	}
 
 	void delete_element(KeyType key, bool adjust_size)
 	{}
+
+private:
+	// return index if key exists in map, -1 if not
+	int64_t key_exists(KeyType key)
+	{
+		for (int i = 0; i < top_index; i++)
+			if (key == pairs[i].key)
+				return i;
+
+		return -1;
+	}
 };

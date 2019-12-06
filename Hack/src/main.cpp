@@ -130,24 +130,21 @@ void test_dynamic_stack()
 	assert(stack.getSize() == 100);
 }
 
-struct Foo
-{
-	double data;
-};
-
-struct Bar
-{
-	char data;
-};
-
 void test_map()
 {
 	// TODO : test this (default values??)
 	//Map<Foo, Bar> map(10);
 
-	Map<Foo, Bar>::Pair pairs[] = { {1.0, 'a'}, { 1.8, 'b' }, { 2.0, 'c' }, {2.5, 'd'}, {3.0, 'e'} };
+	Map<double, char>::Pair pairs[] = { {1.0, 'a'}, { 1.8, 'b' }, { 2.0, 'c' }, {2.5, 'd'}, {3.0, 'e'} };
 	
-	Map<Foo, Bar> map(pairs, 5);
+	Map<double, char> map(pairs, 5);
+	map.insert({9.6, 'h'});
+	map.insert({0.001, 'b'});
+	assert(map.get(9.6) == 'h');
+	map.get(1.8) == 'b';
+	assert(map.get(1.8) == 'b');
+	map.insert({1.8, 'i'});
+	assert(map.get(1.8) == 'i');
 }
 
 int main()
