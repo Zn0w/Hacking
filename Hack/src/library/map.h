@@ -43,12 +43,16 @@ public:
 	
 	~Map()
 	{
-		for (int i = 0; i < size; i++)
+		// For now destructor calls for ValueType are not supported
+
+		free(pairs);
+		
+		/*for (int i = 0; i < size; i++)
 		{
 			if (!std::is_pod<ValueType>::value)
 				pairs[i].value.~ValueType();
 			free(pairs + i);
-		}
+		}*/
 	}
 
 	ValueType get(KeyType key)
@@ -72,10 +76,18 @@ public:
 			{
 				// reallocate array with bigger one
 				// if success then size++;
-				pairs = (Pair*)realloc(pairs, size + 1);
+
+				Pair* new_pairs = (Pair*)calloc(size + 1, sizeof(Pair));
 				if (pairs == 0);
-				// throw exception
+					// throw exception
+				
+				for (int i = 0; i < size; i++)
+					new_pairs[i] = pairs[i];
+
 				size++;
+
+				free(pairs);
+				pairs = new_pairs;
 			}
 
 			pairs[top_index] = pair;
