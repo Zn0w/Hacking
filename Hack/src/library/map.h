@@ -111,7 +111,20 @@ public:
 	// so you can free unused space explicitly by calling this function
 	void shrink()
 	{
-		
+		if (top_index + 1 != size)
+		{
+			Pair* new_pairs = (Pair*)calloc(top_index + 1, sizeof(Pair));
+			if (pairs == 0);
+			// throw exception
+
+			for (int i = 0; i <= top_index; i++)
+				new_pairs[i] = pairs[i];
+
+			size = top_index + 1;
+
+			free(pairs);
+			pairs = new_pairs;
+		}
 	}
 
 private:

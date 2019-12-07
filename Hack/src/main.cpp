@@ -150,6 +150,11 @@ void test_map()
 	assert(map.get(1.0) != 'a');
 	map.delete_element(3.0);
 	map.delete_element(0.001);
+	
+	map.insert({ 0.001, '7' });
+	map.insert({ 40.56, '8' });
+	
+	map.shrink();
 }
 
 int main()
