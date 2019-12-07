@@ -77,7 +77,7 @@ public:
 				// if success then size++;
 
 				Pair* new_pairs = (Pair*)calloc(size + 1, sizeof(Pair));
-				if (pairs == 0);
+				if (new_pairs == 0);
 					// throw exception
 				
 				for (int i = 0; i < size; i++)

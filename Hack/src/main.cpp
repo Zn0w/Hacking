@@ -4,6 +4,7 @@
 #include "library/linked_list.h"
 #include "library/stack.h"
 #include "library/map.h"
+#include "library/vector.h"
 
 
 void display_list(LinkedList<char>* linked_list)
@@ -157,12 +158,30 @@ void test_map()
 	map.shrink();
 }
 
+void test_vector()
+{
+	char data[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g'};
+	
+	Vector<char> vector(data, 7);
+
+	assert(vector.get(1) == 'b');
+
+	vector.delete_element(1);
+	vector.delete_element(5);
+	vector.delete_element(0);
+
+	vector.insert('0');
+	vector.insert('1');
+	vector.insert('2');
+}
+
 int main()
 {
 	//test_linked_list();
 	//test_fixed_stack();
 	//test_dynamic_stack();
-	test_map();
+	//test_map();
+	test_vector();
 
 	system("pause");
 	
