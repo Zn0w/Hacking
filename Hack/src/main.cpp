@@ -101,6 +101,12 @@ void test_dynamic_stack()
 	DynamicStack<int> stack;
 	assert(stack.isEmpty());
 
+	try {
+		stack.getTop();
+		assert(false);
+	}
+	catch (accessing_empty_stack e) { assert(true); }
+
 	stack.push(5);
 	stack.push(4);
 	stack.push(3);
@@ -148,7 +154,13 @@ void test_map()
 	assert(map.get(1.8) == 'i');
 
 	map.delete_element(1.0);
-	assert(map.get(1.0) != 'a');
+
+	try { 
+		map.get(1.0);
+		assert(false);
+	}
+	catch (no_pair e) { assert(true); }
+
 	map.delete_element(3.0);
 	map.delete_element(0.001);
 	
@@ -156,6 +168,8 @@ void test_map()
 	map.insert({ 40.56, '8' });
 	
 	map.shrink();
+
+	map.get(21.7);
 }
 
 void test_vector()
@@ -169,6 +183,18 @@ void test_vector()
 	vector.delete_element(1);
 	vector.delete_element(5);
 	vector.delete_element(0);
+
+	try {
+		vector.get(100);
+		assert(false);
+	}
+	catch (invalid_index e) { assert(true); }
+
+	try {
+		vector.delete_element(5);
+		assert(false);
+	}
+	catch (invalid_index e) { assert(true); }
 
 	vector.insert('0');
 	vector.insert('1');

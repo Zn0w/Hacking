@@ -25,11 +25,7 @@ public:
 		for (int i = 1; i < size; i++)
 		{
 			node->next = create_node(*(data_array + i));
-			if (node->next == 0)
-				// TODO : throw exception or something
-				return;
-			else
-				node = node->next;
+			node = node->next;
 		}
 
 		end = node;

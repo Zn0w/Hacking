@@ -16,16 +16,12 @@ public:
 	FixedStack(uint32_t size)
 	{
 		array = new Type[size];
-		if (array == 0);
-			// TODO : throw exception or something
 		this->size = size;
 	}
 
 	FixedStack(uint32_t size, int64_t* values, uint32_t array_size)
 	{
 		array = new Type[size];
-		if (array == 0);
-			// TODO : throw exception 'unable to allocate memory for the stack	
 			
 		for (int i = 0; i < array_size && i < size; i++)
 			array[i] = values[i];
@@ -80,6 +76,16 @@ public:
 };
 
 
+#include <exception>
+
+class accessing_empty_stack : public std::exception
+{
+	virtual const char* what() const throw()
+	{
+		return "Trying to access the top element of an empty stack";
+	}
+} accessing_empty_stack_exception;
+
 // A dynamic size stack implemented with LinkedList
 template <class Type>
 class DynamicStack
@@ -105,7 +111,6 @@ public:
 		
 		for (int i = 1; i < size; i++)
 		{
-			// TODO : catch exception
 			node->next = create_node(values[i]);
 			node = node->next;
 		}
@@ -128,8 +133,8 @@ public:
 	{
 		if (!isEmpty())
 			return top->data;
-		else;
-			// TODO : throw exception 'trying accessing top element of an empty stack
+		else
+			throw accessing_empty_stack_exception;
 	}
 
 	void pop()
@@ -145,7 +150,6 @@ public:
 
 	void push(Type data)
 	{
-		// TODO : catch exception
 		Node* new_top = create_node(data);
 		new_top->next = top;
 		top = new_top;
@@ -166,8 +170,6 @@ private:
 	Node* create_node(uint64_t data)
 	{
 		Node* new_node = new Node;
-		if (new_node == 0);
-			// TODO : throw exception 'failed to allocate memory for the new element
 		new_node->next = 0;
 		new_node->data = data;
 	

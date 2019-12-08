@@ -1,8 +1,16 @@
 #pragma once
 
 #include <stdint.h>
-#include <stdlib.h>
+#include <exception>
 
+
+class invalid_index : public std::exception
+{
+	virtual const char* what() const throw()
+	{
+		return "Object of that index doesn't exist";
+	}
+} invalid_index_exception;
 
 template <class Type>
 class Vector
@@ -15,17 +23,13 @@ private:
 public:
 	Vector(uint64_t reserve)
 	{
-		values = (Type*)calloc(reserve, sizeof(Type));
-		if (values == 0);
-		// throw exception
+		values = new Type[reserve];
 		size = reserve;
 	}
 
 	Vector(Type* data_array, uint64_t size)
 	{
-		values = (Type*)calloc(size, sizeof(Type));
-		if (values == 0);
-		// throw exception
+		values = new Type[size];
 		this->size = size;
 		top_index = size - 1;
 
@@ -35,9 +39,7 @@ public:
 
 	~Vector()
 	{
-		// For now destructor calls for ValueType are not supported
-
-		free(values);
+		delete[] values;
 	}
 
 	void insert(Type value)
@@ -45,19 +47,16 @@ public:
 		top_index++;
 		if (top_index == size)
 		{
-			// reallocate array with bigger one
-			// if success then size++;
+			// create a bigger array
 
-			Type* new_values = (Type*)calloc(size + 1, sizeof(Type));
-			if (new_values == 0);
-			// throw exception
+			Type* new_values = new Type[size + 1];
 
 			for (int i = 0; i < size; i++)
 				new_values[i] = values[i];
 
 			size++;
 
-			free(values);
+			delete[] values;
 			values = new_values;
 		}
 
@@ -68,8 +67,8 @@ public:
 	{
 		if (index <= top_index)
 			return values[index];
-		else;
-		// object doesn't exist, throw exception
+		else
+			throw invalid_index_exception;
 	}
 
 	void delete_element(uint64_t index)
@@ -81,7 +80,7 @@ public:
 
 			top_index--;
 		}
-		else;
-		// object doesn't exist, throw exception
+		else
+			throw invalid_index_exception;
 	}
 };
